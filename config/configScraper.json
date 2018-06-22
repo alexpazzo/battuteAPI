@@ -8,7 +8,7 @@
             "COLMI": "battute-divertenti.php?PA={{PAGINATION}}&genere=1&label=colmi",
             "DIFFERENZE": "/battute-divertenti.php?PA={{PAGINATION}}&genere=3&label=differenze"
         },
-        "SELECTOR": "$(\"body > form > div.container > div.content > div:nth-child(3) > .end\").prev(\"div\")"
+        "SELECTOR": "$(\".panel-body > div\")"
     },
     {
         "NAME": "fuoriditesta",
@@ -30,6 +30,6 @@
             "UOMINI": "uomini-{{PAGINATION}}.html",
             "VARIE": "varie-{{PAGINATION}}.html"
         },
-        "SELECTOR": "$(\".panel-body > div\")"
+        "SELECTOR": "$(\"body > form > div.container > div.content > div:nth-child(3) > .end\").prev(\"div\")"
     }
 ]
