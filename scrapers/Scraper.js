@@ -1,5 +1,7 @@
 'use strict';
 
+const rp = require('request-promise');
+
 /**
  * @typedef {Object} Page
  * @property {String} page URL without the BASE_URL, using {{PAGE}} as a placeholder for the page number.
@@ -47,8 +49,21 @@ class Scraper {
      * @param {Object} [options={}] Additional options
      * @returns {Joke[]}
      */
-    getJokesFromPage(page, options) {
+    async getJokesFromPage(page, options) {
         throw new Error(`getJokesFromPage not implemented`);
+    }
+
+    /**
+     * Download a page
+     * @param {Page} pageConfig
+     * @param {Object} options
+     * @param {Number} [options.pageNum=1]
+     * @returns {String} html
+     */
+    async _downloadPage(pageConfig, options = {}) {
+        const { pageNum = 1 } = options;
+        const url = this.BASE_URL + pageConfig.page.replace('{{PAGE}}', pageNum);
+        return await rp(url);
     }
 
 }
