@@ -14,7 +14,7 @@ app.get('/', async function (req, res) {
 app.get('/update_jokes', async function (req, res) {
 
     const lps = new LaPecoraSclera();
-    const jokes = lps.get
+    const jokes = lps.getJokes(LaPecoraSclera._CATEGORIES.CHUCK_NORRIS);
 
     res.send({ status: "OK", listServices: [] });
 

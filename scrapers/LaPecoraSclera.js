@@ -41,9 +41,6 @@ class LaPecoraSclera {
 
         debugger;
     }
-
-
-
 }
 
 module.exports = LaPecoraSclera;
