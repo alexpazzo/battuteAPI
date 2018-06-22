@@ -14,16 +14,16 @@ class LaPecoraSclera extends Scraper {
 
     get PAGES() {
         return [{
-            page: 'chuck-norris-facts.php?',
+            page: 'chuck-norris-facts.php?PA={{PAGINATION}}',
             categories: [Scraper.CATEGORIES.CHUCK_NORRIS]
         }, {
-            page: 'chuck-norris-facts.php?',
+            page: 'chuck-norris-facts.php?PA={{PAGINATION}}',
             categories: [Scraper.CATEGORIES.FREDDURE]
         }, {
-            page: 'battute-divertenti.php?genere=1&label=colmi',
+            page: 'battute-divertenti.php?PA={{PAGINATION}}&genere=1&label=colmi',
             categories: Scraper.CATEGORIES.COLMI
         }, {
-            page: '/battute-divertenti.php?genere=3&label=differenze',
+            page: '/battute-divertenti.php?PA={{PAGINATION}}&genere=3&label=differenze',
             categories: Scraper.CATEGORIES.DIFFERENZE
         }];
     }
