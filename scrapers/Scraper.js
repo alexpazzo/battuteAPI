@@ -1,10 +1,19 @@
 'use strict';
 
 /**
- * @typedef Page
- * @property {String} page URL without the BASE_URL, using {{PAGE}} as a placeholder for the page number
- * @property {String[]} categories Categories of the jokes collected from this page
+ * @typedef {Object} Page
+ * @property {String} page URL without the BASE_URL, using {{PAGE}} as a placeholder for the page number.
+ * @property {String[]} categories Categories of the jokes collected from this page.
  */
+
+
+/**
+ * @typedef {Object} Joke
+ * @property {String} text Text of the joke.
+ * @property {String[]} categories Categories of the joke. Must be the ones of Scraper.CATEGORIES
+ * @property {String} source From where the joke was scraped.
+ */
+
 
 /**
  * @class Scraper
@@ -30,6 +39,16 @@ class Scraper {
     /** @returns {Page[]} List of pages supported by this scraper */
     get PAGES() {
         throw new Error(`Pages not defined`);
+    }
+
+    /**
+     * Download the jokes from the specified page
+     * @param {Page} page 
+     * @param {Object} [options={}] Additional options
+     * @returns {Joke[]}
+     */
+    getJokesFromPage(page, options) {
+        throw new Error(`getJokesFromPage not implemented`);
     }
 
 }
