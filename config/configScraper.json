@@ -1,0 +1,35 @@
+[
+    {
+        "NAME": "lapecorasclera",
+        "BASE_URL": "http://www.lapecorasclera.it/",
+        "CATEGORIES": {
+            "CHUCK_NORRIS": "chuck-norris-facts.php?PA={{PAGINATION}}",
+            "FREDDURE": "chuck-norris-facts.php?PA={{PAGINATION}}",
+            "COLMI": "battute-divertenti.php?PA={{PAGINATION}}&genere=1&label=colmi",
+            "DIFFERENZE": "/battute-divertenti.php?PA={{PAGINATION}}&genere=3&label=differenze"
+        },
+        "SELECTOR": "$(\"body > form > div.container > div.content > div:nth-child(3) > .end\").prev(\"div\")"
+    },
+    {
+        "NAME": "fuoriditesta",
+        "BASE_URL": "http://www.fuoriditesta.it/barzellette/",
+        "CATEGORIES": {
+            "AFORISMI": "aforismi-{{PAGINATION}}.html",
+            "ANIMALI": "animali-{{PAGINATION}}.html",
+            "CALCIO": "calcio-{{PAGINATION}}.html",
+            "CARABINIERI": "carabinieri-{{PAGINATION}}.html",
+            "COLMI_E_FREDDURE": "colmi-e-freddure-{{PAGINATION}}.html",
+            "DAL_DOTTORE": "dal-dottore-{{PAGINATION}}.html",
+            "DONNE": "donne-{{PAGINATION}}.html",
+            "INDOVINELLI": "indovinelli-{{PAGINATION}}.html",
+            "POLITICA": "politica-{{PAGINATION}}.html",
+            "PROFESSIONI": "professioni-{{PAGINATION}}.html",
+            "RELIGIONE": "religione-{{PAGINATION}}.html",
+            "SCUOLA": "scuola-{{PAGINATION}}.html",
+            "TECNOLOGIA": "tecnologia-{{PAGINATION}}.html",
+            "UOMINI": "uomini-{{PAGINATION}}.html",
+            "VARIE": "varie-{{PAGINATION}}.html"
+        },
+        "SELECTOR": "$(\".panel-body > div\")"
+    }
+]
