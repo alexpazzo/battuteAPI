@@ -68,23 +68,41 @@ class Database {
     /**
      * Returns one Joke, if no options are specified, it returns one joke at random
      * @param {Object} options
-     * @param {String} [options.categories='']
-     * @param {Number} [options.count=1]
+     * @param {String[]} [options.categories=[]]
      * @returns {Joke}
      */
     async getJoke(options = {}) {
         await this.initialized;
-        const { categories, count = 1 } = options;
-        const values = [];
-        const jokes = this._jokes.find({ 'categories': { '$contains': categories } });
+        const { categories = [] } = options;
 
-        if (false === Array.isArray(jokes) || jokes.length === 0) return [];
-        for (let i = 0; i < count; i++) {
-            const pos = Math.floor(Math.random() * jokes.length)
-            const joke = jokes.splice(pos, 1);
-            values.push(joke);
-        }
-        return values;
+        // Being lokijs an in-memory database, there is no problem in doing multiple queries
+        const count = this._jokes.chain()
+            .find({ 'categories': { '$contains': categories } })
+            .count();
+        if (0 === count)
+            return null;
+
+        const pos = 1 + Math.floor(Math.random() * count);
+        const joke = this._jokes.chain()
+            .find({ 'categories': { '$contains': categories } })
+            .offset(pos)
+            .limit(1)
+            .data();
+        return joke[0];
+    }
+
+
+    /**
+     * Returns multiple jokes
+     * @param {Object} options
+     * @param {String[]} [options.categories=[]]
+     * @param {Number} [options.count=10]
+     * @returns {Joke[]}
+     */
+    async getJokes(options = {}) {
+        const { categories = [], count = 10 } = options;
+        const jokesPromises = Array(count).fill().map(_ => this.getJoke({ categories }));
+        return Promise.all(jokesPromises);
     }
 }
 
