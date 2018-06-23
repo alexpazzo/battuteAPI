@@ -1,28 +1,24 @@
 'use strict';
 
-const express = require('express');
-const app = express();
-
-const LaPecoraSclera = require('./scrapers/LaPecoraSclera.js');
-
-
-app.get('/', async function (req, res) {
-    res.send({ status: "OK", listServices: [] });
+const fastify = require('fastify')({
+    logger: true
 });
 
 
-app.get('/update_jokes', async function (req, res) {
-
-    const lps = new LaPecoraSclera();
-    const jokes = lps.getJokes(LaPecoraSclera._CATEGORIES.CHUCK_NORRIS);
-
-    res.send({ status: "OK", listServices: [] });
-
+fastify.get('/', function (request, reply) {
+    reply.send({ status: true });
 });
 
 
-app.get('/chuck', async function (req, res) {
-
+fastify.register(require('./routes/mngmnt.js'), {
+    prefix: '/mngmnt'
 });
 
-app.listen(3000);
+
+fastify.listen(3000, '0.0.0.0', function (err, address) {
+    if (err) {
+        fastify.log.error(err);
+        process.exit(1);
+    }
+    fastify.log.info(`server listening on ${address}`);
+});
