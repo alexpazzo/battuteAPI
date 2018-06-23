@@ -2,28 +2,42 @@
 
 const LokiJS = require('lokijs');
 
-//const DATABASE_PATH = './data/database.json';
-const DATABASE_PATH = 'database.json';
+const DATABASE_PATH = './data/database.json';
 
 /**
-* @class Database
-* base class that provide an interface for lokijs database
-*/
+ * @class Database
+ * base class that provide an interface for lokijs database
+ */
 class Database {
+
     constructor() {
+        let initResolve;
+        this.initialized = new Promise(resolve => initResolve = resolve);
+
+        // Load or create the collections
+        const loadCollections = _ => {
+            this._jokes = this._db.getCollection('jokes');
+            if (null === this._jokes)
+                this._jokes = this._db.addCollection('jokes');
+            initResolve();
+        }
+
+        // Load the database
         this._db = new LokiJS(DATABASE_PATH, {
             autoload: true,
             autosave: true,
-            autosaveInterval: 5000
+            autosaveInterval: 1000,
+            autoloadCallback: loadCollections,
         });
-        this._jokes = this._db.addCollection('jokes');
     }
+
 
     /**
      * Add a joke to the DB
      * @param {Joke} joke
      */
-    addJoke(joke) {
+    async addJoke(joke) {
+        await this.initialized;
         if (!joke) throw new Error("MMM something is missing.... A Joke!");
         if (!joke.text) throw new Error("No text no Party! 🎉");
         if (!joke.categories) joke.categories = [];
@@ -31,11 +45,14 @@ class Database {
 
         this._jokes.insert(joke);
     }
+
+
     /**
      * Return All type of joke categories 
      * @returns {String[]}     
      */
-    getAllCategories() {
+    async getAllCategories() {
+        await this.initialized;
         return this._jokes.mapReduce(
             (obj) => obj.categories,
             (mappedCategories) => {
@@ -47,6 +64,7 @@ class Database {
         );
     }
 
+
     /**
      * Returns one Joke, if no options are specified, it returns one joke at random
      * @param {Object} options
@@ -54,7 +72,8 @@ class Database {
      * @param {Number} [options.count=1]
      * @returns {Joke}
      */
-    getJoke(options = {}) {
+    async getJoke(options = {}) {
+        await this.initialized;
         const { categories, count = 1 } = options;
         const values = [];
         const jokes = this._jokes.find({ 'categories': { '$contains': categories } });
@@ -69,4 +88,5 @@ class Database {
     }
 }
 
-module.exports = Database;
+const db = new Database();
+module.exports = db;
