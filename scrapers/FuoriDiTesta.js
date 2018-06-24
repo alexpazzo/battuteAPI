@@ -1,89 +1,91 @@
 'use strict';
 
-const request = require('request-promise-native');
 const cheerio = require('cheerio');
+const Scraper = require('./Scraper.js');
 
-class FuoriDiTesta {
-    constructor() {
-
-    }
+class FuoriDiTesta extends Scraper {
 
     static get BASE_URL() {
         return "http://www.fuoriditesta.it/barzellette/";
     }
 
-    static get _CATEGORIES() {
-        return {
+    static get PAGES() {
+        return [{
             "AFORISMI": {
-                page: "aforismi.html",
-                pages: 317
+                page: "aforismi-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.AFORISMI]
             },
             "ANIMALI": {
-                page: "animali.html",
-                pages: 23
+                page: "animali-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.ANIMALI]
             },
             "CALCIO": {
-                page: "calcio.html",
-                pages: 20
+                page: "calcio-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.CALCIO]
             },
             "CARABINIERI": {
-                page: "carabinieri.html",
-                pages: 164
+                page: "carabinieri-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.CARABINIERI]
             },
             "COLMI_E_FREDDURE": {
-                page: "colmi-e-freddure.html",
-                pages: 209
+                page: "colmi-e-freddure-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.COLMI, Scraper.CATEGORIES.FREDDURE]
             },
             "DAL_DOTTORE": {
-                page: "dal-dottore.html",
-                pages: 66
+                page: "dal-dottore-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.DAL_DOTTORE]
             },
             "DONNE": {
-                page: "donne.html",
-                pages: 27
+                page: "donne-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.DONNE]
             },
             "INDOVINELLI": {
-                page: "indovinelli.html",
-                pages: 27
+                page: "indovinelli-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.INDOVINELLI]
             },
             "POLITICA": {
-                page: "politica.html",
-                pages: 27
+                page: "politica-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.POLITICA]
             },
             "PROFESSIONI": {
-                page: "professioni.html",
-                pages: 18
+                page: "professioni-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.PROFESSIONI]
             },
             "RELIGIONE": {
-                page: "religione.html",
-                pages: 42
+                page: "religione-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.RELIGIONE]
             },
             "SCUOLA": {
-                page: "scuola.html",
-                pages: 59
+                page: "scuola-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.SCUOLA]
             },
             "TECNOLOGIA": {
-                page: "tecnologia.html",
-                pages: 35
+                page: "tecnologia-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.TECNOLOGIA]
             },
             "UOMINI": {
-                page: "uomini.html",
-                pages: 16
+                page: "uomini-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.UOMINI]
             },
             "VARIE": {
-                page: "varie.html",
-                pages: 37
+                page: "varie-{{PAGE}}.html",
+                categories: [Scraper.CATEGORIES.VARIE]
             }
-
-        }
-
+        }]
     }
 
-    getJokes(category) {
-        if (false === (category in this.categories))
-            throw new Error(`Invalid category "${category}"`);
-
-        debugger;
+    async getJokesFromPage(page, options) {
+        const html = await this._downloadPage(page);
+        const $ = cheerio.load(html);
+        const divs = $("body > form > div.container > div.content > div:nth-child(3) > .end").prev("div");
+        const jokes = Array.from(divs)
+            .map(div => div.children[0].data)
+            .map(joke => ({
+                text: joke,
+                categories: [...page.categories],
+                source: 'FuoriDiTesta'
+            }));
+        return jokes;
     }
 
 }

@@ -1,7 +1,6 @@
 'use strict';
 
 const cheerio = require('cheerio');
-
 const Scraper = require('./Scraper.js');
 
 /**
@@ -43,7 +42,6 @@ class LaPecoraSclera extends Scraper {
             }));
         return jokes;
     }
-
 }
 
 module.exports = LaPecoraSclera;

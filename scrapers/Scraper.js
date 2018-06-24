@@ -30,6 +30,21 @@ class Scraper {
             FREDDURE: 'FREDDURE',
             COLMI: 'COLMI',
             DIFFERENZE: 'DIFFERENZE',
+            COLMI: "COLMI",
+            AFORISMI: "AFORISMI",
+            ANIMALI: "ANIMALI",
+            CALCIO: "CALCIO",
+            CARABINIERI: "CARABINIERI",
+            DAL_DOTTORE: "DAL_DOTTORE",
+            DONNE: "DONNE",
+            INDOVINELLI: "INDOVINELLI",
+            POLITICA: "POLITICA",
+            PROFESSIONI: "PROFESSIONI",
+            RELIGIONE: "RELIGIONE",
+            SCUOLA: "SCUOLA",
+            TECNOLOGIA: "TECNOLOGIA",
+            UOMINI: "UOMINI",
+            VARIE: "VARIE"
         };
     }
 
