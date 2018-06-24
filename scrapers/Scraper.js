@@ -68,6 +68,23 @@ class Scraper {
         throw new Error(`getJokesFromPage not implemented`);
     }
 
+
+    /**
+     * Download the jokes from all the pages of the scraper
+     * @returns {Joke[]}
+     */
+    async downloadAllJokes() {
+        const downloadPromises = this.PAGES.map(page => this.getJokesFromPage(page));
+        const jokesFromPages = await Promise.all(downloadPromises);
+        const jokes = jokesFromPages
+            .reduce((all, jokes) => {
+                all.push(...jokes);
+                return all;
+            });
+        return jokes;
+    }
+
+
     /**
      * Download a page
      * @param {Page} pageConfig

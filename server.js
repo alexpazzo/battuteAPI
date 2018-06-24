@@ -10,7 +10,7 @@ fastify.get('/', function (request, reply) {
 });
 
 fastify.register(require('./routes/v1/jokes.js'), { prefix: '/v1' });
-
+//TODO add auth to mngmnt route
 fastify.register(require('./routes/v1/mngmnt.js'), { prefix: '/v1' });
 
 
