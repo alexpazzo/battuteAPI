@@ -9,6 +9,7 @@ fastify.get('/', function (request, reply) {
     reply.send({ status: true });
 });
 
+fastify.register(require('./routes/v1/jokes.js'), { prefix: '/v1' });
 
 fastify.register(require('./routes/mngmnt.js'), {
     prefix: '/mngmnt'
