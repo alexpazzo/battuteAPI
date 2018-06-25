@@ -22,10 +22,10 @@ class LaPecoraSclera extends Scraper {
             categories: [Scraper.CATEGORIES.FREDDURE]
         }, {
             page: 'battute-divertenti.php?PA={{PAGE}}&genere=1&label=colmi',
-            categories: Scraper.CATEGORIES.COLMI
+            categories: [Scraper.CATEGORIES.COLMI]
         }, {
             page: 'battute-divertenti.php?PA={{PAGE}}&genere=3&label=differenze',
-            categories: Scraper.CATEGORIES.DIFFERENZE
+            categories: [Scraper.CATEGORIES.DIFFERENZE]
         }];
     }
 

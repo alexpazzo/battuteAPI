@@ -30,7 +30,6 @@ class Scraper {
             FREDDURE: 'FREDDURE',
             COLMI: 'COLMI',
             DIFFERENZE: 'DIFFERENZE',
-            COLMI: "COLMI",
             AFORISMI: "AFORISMI",
             ANIMALI: "ANIMALI",
             CALCIO: "CALCIO",
