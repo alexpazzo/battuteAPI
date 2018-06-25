@@ -1,13 +1,15 @@
 'use strict';
 
+const db = require('../../database.js');
+
 async function routes(fastify, options) {
     fastify.get('/', async (request, reply) => {
-        //get categories from request
-        const categories = request.query.categories;
-        if (!categories) return { status: "get a random joke (all categories)" };
+        const category = request.query.category;
 
-        return { status: `get a random joke from ${categories}` };
+        const categories = category ? [category] : [];
+        const joke = await db.getJoke({ categories });
 
+        return { status: true, data: joke };
     });
 
     fastify.post('/', async (request, reply) => {
