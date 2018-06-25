@@ -24,7 +24,7 @@ class LaPecoraSclera extends Scraper {
             page: 'battute-divertenti.php?PA={{PAGE}}&genere=1&label=colmi',
             categories: Scraper.CATEGORIES.COLMI
         }, {
-            page: '/battute-divertenti.php?PA={{PAGE}}&genere=3&label=differenze',
+            page: 'battute-divertenti.php?PA={{PAGE}}&genere=3&label=differenze',
             categories: Scraper.CATEGORIES.DIFFERENZE
         }];
     }
@@ -33,6 +33,7 @@ class LaPecoraSclera extends Scraper {
         const html = await this._downloadPage(page);
         const $ = cheerio.load(html);
         const divs = $('.panel-body > div')
+        if (!divs) throw new Error("No joke found");
         const jokes = Array.from(divs)
             .map(div => div.children[0].data)
             .map(joke => ({
