@@ -96,7 +96,7 @@ class Database {
             .find({ 'categories': { '$contains': categories } })
             .offset(pos)
             .limit(1)
-            .data();
+            .data({ removeMeta: true });
         return joke[0];
     }
 
