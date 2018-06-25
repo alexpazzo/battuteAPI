@@ -60,11 +60,14 @@ class FuoriDiTesta extends Scraper {
 
     async getJokesFromPage(page, options) {
         const html = await this._downloadPage(page);
-        const $ = cheerio.load(html);
-        const divs = $("body > form > div.container > div.content > div:nth-child(3) > .end").prev("div");
+        const $ = await cheerio.load(html);
+        const divs = $("div.content > div:nth-child(3) > .end").prev("div");
         if (!divs) throw new Error("No joke found");
         const jokes = Array.from(divs)
-            .map(div => div.children[0].data)
+            .map(div => div.children
+                .filter(c => c.type === 'text')
+                .map(c => c.data.replace('\n', ''))
+                .join('\n'))
             .map(joke => ({
                 text: joke,
                 categories: [...page.categories],
@@ -72,6 +75,5 @@ class FuoriDiTesta extends Scraper {
             }));
         return jokes;
     }
-
 }
 module.exports = FuoriDiTesta;
