@@ -49,6 +49,9 @@ class Database {
         // Create hash
         joke.hash = sha1(joke.text);
 
+        // Add length
+        joke.length = joke.text.length;
+
         // Check if the joke already exists
         const exists = this._jokes.find({ hash: joke.hash });
         if (0 === exists.length)
