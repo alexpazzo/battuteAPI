@@ -1,6 +1,7 @@
 'use strict';
 
 const LokiJS = require('lokijs');
+const sha1 = require('sha1');
 
 const DATABASE_PATH = './data/database.json';
 
@@ -38,12 +39,20 @@ class Database {
      */
     async addJoke(joke) {
         await this.initialized;
+
+        // Check joke 🤪
         if (!joke) throw new Error("MMM something is missing.... A Joke!");
         if (!joke.text) throw new Error("No text no Party! 🎉");
         if (!joke.categories) joke.categories = [];
         if (!joke.source) joke.source = "Unknown";
 
-        this._jokes.insert(joke);
+        // Create hash
+        joke.hash = sha1(joke.text);
+
+        // Check if the joke already exists
+        const exists = this._jokes.find({ hash: joke.hash });
+        if (0 === exists.length)
+            this._jokes.insert(joke);
     }
 
 
