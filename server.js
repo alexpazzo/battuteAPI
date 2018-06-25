@@ -9,9 +9,9 @@ fastify.get('/', function (request, reply) {
     reply.send({ status: true });
 });
 
-fastify.register(require('./routes/v1/jokes.js'), { prefix: '/v1' });
+fastify.register(require('./routes/v1/jokes.js'), { prefix: '/v1/jokes' });
 //TODO add auth to mngmnt route
-fastify.register(require('./routes/v1/mngmnt.js'), { prefix: '/v1' });
+fastify.register(require('./routes/v1/mngmnt.js'), { prefix: '/v1/mngmnt' });
 
 
 fastify.listen(3000, '0.0.0.0', function (err, address) {

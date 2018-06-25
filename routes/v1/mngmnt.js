@@ -2,12 +2,16 @@
 const Core = require('../../Core.js');
 
 async function routes(fastify, options) {
-    fastify.get('/mngmnt/clear', async (request, reply) => {
 
+    fastify.get('/', async (request, reply) => {
+        return { msg: 'Management' };
+    });
+
+    fastify.get('/clear', async (request, reply) => {
         return { test: 1 };
     });
 
-    fastify.get('/mngmnt/scrape', async (request, reply) => {
+    fastify.get('/scrape', async (request, reply) => {
         const scraperType = request.query.scraper;
         let number = 0;
         if (scraperType) {
