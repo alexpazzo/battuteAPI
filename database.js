@@ -94,7 +94,7 @@ class Database {
         if (0 === count)
             return null;
 
-        const pos = 1 + Math.floor(Math.random() * count);
+        const pos = Math.floor(Math.random() * count);
         const joke = this._jokes.chain()
             .find({ 'categories': { '$contains': categories } })
             .offset(pos)
