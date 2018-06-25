@@ -49,13 +49,13 @@ class Scraper {
     }
 
     /** @returns {String} Base url of the website to be scraped (ex: https://example.com) */
-    get BASE_URL() {
-        throw new Error(`Pages not defined`);
+    static get BASE_URL() {
+        throw new Error(`BASE_URL not defined`);
     }
 
     /** @returns {Page[]} List of pages supported by this scraper */
-    get PAGES() {
-        throw new Error(`Pages not defined`);
+    static get PAGES() {
+        throw new Error(`PAGES not defined`);
     }
 
     /**
