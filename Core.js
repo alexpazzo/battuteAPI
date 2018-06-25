@@ -17,13 +17,21 @@ class Core {
      * Scrape a service
      */
     static async scrape(service) {
+        let numberTotal = 0;
+        let numberDone = 0;
         if (false === (service in Core.SERVICE)) throw new Error("Please provide a valid service");
         const jokes = await Core.SERVICE[service].downloadAllJokes();
+        numberTotal = jokes.length;
         for (const joke of jokes) {
-            await db.addJoke(joke).catch(console.error);
+            try {
+                await db.addJoke(joke);
+                numberDone++
+            } catch (error) {
+                console.error(error, error.stack);
+            }
         }
+        return { numberTotal, numberDone };
     }
-
 }
 
 module.exports = Core;
