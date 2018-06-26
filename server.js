@@ -4,6 +4,8 @@ const fastify = require('fastify')({
     logger: true
 });
 
+const cors = require('cors');
+fastify.use(cors());
 
 fastify.get('/', function (request, reply) {
     reply.send({ status: true });
