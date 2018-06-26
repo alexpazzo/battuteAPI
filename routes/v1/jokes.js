@@ -5,10 +5,11 @@ const db = require('../../database.js');
 async function routes(fastify, options) {
     fastify.get('/', async (request, reply) => {
         const category = request.query.category;
-
-        const categories = category ? [category] : [];
-        const joke = await db.getJoke({ categories });
-
+        const joke = await db.getJoke({
+            categories: category ? [category] : [],
+            source: request.query.source,
+            length: request.query.length
+        });
         return { status: true, data: joke };
     });
 

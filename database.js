@@ -85,18 +85,22 @@ class Database {
      */
     async getJoke(options = {}) {
         await this.initialized;
-        const { categories = [] } = options;
+        const { categories = [], source, length } = options;
+
+        const filter = { 'categories': { '$contains': categories } };
+        if (length) filter.length = { '$lte': length };
+        if (source) filter.source = { '$eq': source };
 
         // Being lokijs an in-memory database, there is no problem in doing multiple queries
         const count = this._jokes.chain()
-            .find({ 'categories': { '$contains': categories } })
+            .find(filter)
             .count();
         if (0 === count)
             return null;
 
         const pos = Math.floor(Math.random() * count);
         const joke = this._jokes.chain()
-            .find({ 'categories': { '$contains': categories } })
+            .find(filter)
             .offset(pos)
             .limit(1)
             .data({ removeMeta: true });
