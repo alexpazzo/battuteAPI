@@ -1,0 +1,3 @@
+apps:
+  - script   : 'server.js'
+    name     : 'battute-api'
